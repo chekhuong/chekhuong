@@ -73,7 +73,7 @@ struct InlineView: View {
     var body: some View {
         if let first = entry.pending.first {
             let timeText = first.time.map { VN.time($0) + " " } ?? ""
-            Label("\(entry.pending.count) việc · \(timeText)\(first.title)", systemImage: "checklist")
+            Label("\(entry.pending.count) việc · \(timeText)\(first.task.title)", systemImage: "checklist")
         } else if entry.totalToday > 0 {
             Label("Xong hết việc hôm nay 🎉", systemImage: "checkmark.circle")
         } else {

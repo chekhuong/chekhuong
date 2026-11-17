@@ -20,7 +20,6 @@ jobs:
 
       - name: Build (không ký)
         run: |
-          set -o pipefail
           xcodebuild build \
             -project TodoLock.xcodeproj \
             -scheme TodoLock \
@@ -29,7 +28,8 @@ jobs:
             -destination 'generic/platform=iOS' \
             -derivedDataPath build \
             CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
-            | tee build.log | grep -E "error:|warning: .*(TodoLock|Shared|Widget)|BUILD" || true
+            > build.log 2>&1 || true
+          grep -E "^/.*: error:|BUILD (SUCCEEDED|FAILED)" build.log | sort -u | head -60
           grep -q "BUILD SUCCEEDED" build.log
 
       - name: Đóng gói .ipa
